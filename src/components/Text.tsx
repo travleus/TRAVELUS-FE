@@ -1,4 +1,4 @@
-import { Fragment, ReactNode } from 'react';
+import { AllHTMLAttributes, Fragment, ReactNode } from 'react';
 import { css } from '@emotion/react';
 import { Hash } from '@utils/types';
 
@@ -32,7 +32,10 @@ interface Props {
   color?: string;
 }
 
-function Text({ children, typographyType, fontWeight, color, className }: Props) {
+type TextProps<Element extends keyof JSX.IntrinsicElements = 'span'> = Props & AllHTMLAttributes<Element>;
+
+function Text<Element extends keyof JSX.IntrinsicElements = 'span'>(props: TextProps<Element>) {
+  const { children, typographyType, fontWeight, color, className } = props as TextProps;
   return (
     <span
       css={css`
