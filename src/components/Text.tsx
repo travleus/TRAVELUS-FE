@@ -9,6 +9,7 @@ const TypographyType = {
   t4: 't4',
   t5: 't5',
   t6: 't6',
+  t7: 't7',
 } as const;
 
 export type TypographyValue = typeof TypographyType[keyof typeof TypographyType];
@@ -20,6 +21,7 @@ const TypographyHash: Hash<number> = {
   t4: 18,
   t5: 16,
   t6: 14,
+  t7: 12,
 };
 
 interface Props {
@@ -27,14 +29,16 @@ interface Props {
   typographyType: TypographyValue;
   fontWeight?: number;
   className?: string;
+  color?: string;
 }
 
-function Text({ children, typographyType, fontWeight, className }: Props) {
+function Text({ children, typographyType, fontWeight, color, className }: Props) {
   return (
     <span
       css={css`
         font-size: ${TypographyHash[typographyType]}px;
         font-weight: ${fontWeight};
+        color: ${color};
       `}
       className={className}>
       {typeof children === 'string' ? convertNewLineToJSX(children) : children}
