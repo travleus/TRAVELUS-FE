@@ -4,6 +4,7 @@ import type { AppProps } from 'next/app';
 import { QueryClient } from '@tanstack/query-core';
 import { QueryClientProvider, Hydrate } from '@tanstack/react-query';
 import { useState } from 'react';
+import AppLayout from '@components/AppLayout';
 
 function MyApp({ Component, pageProps }: AppProps<{ dehydratedState: unknown }>) {
   const [queryClient] = useState(
@@ -18,7 +19,9 @@ function MyApp({ Component, pageProps }: AppProps<{ dehydratedState: unknown }>)
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
-        <Component {...pageProps} />
+        <AppLayout>
+          <Component {...pageProps} />
+        </AppLayout>
       </Hydrate>
     </QueryClientProvider>
   );
