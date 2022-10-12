@@ -13,6 +13,7 @@ const colors = {
   tag3: '#995CE8',
   tag4: '#79C75E',
   tag5: '#E1A64E',
+  white: '#FFFFFF',
 };
 
 export default colors;
