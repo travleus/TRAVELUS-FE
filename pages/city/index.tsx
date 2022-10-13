@@ -3,6 +3,7 @@ import Text from '@components/Text';
 import styled from '@emotion/styled';
 import BackButton from '@components/BackButton';
 import { useRouter } from 'next/router';
+import { Container, TopContainer, MainContainer } from '@components/Container';
 
 const AllCity: NextPage = () => {
   return (
@@ -45,26 +46,6 @@ const AllCity: NextPage = () => {
     </Container>
   );
 };
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 15px 30px;
-
-  @media screen and (max-width: 768px) {
-    padding: 15px 10px;
-  }
-`;
-
-const TopContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding-top: 20px;
-`;
-
-const MainContainer = styled.div`
-  padding-top: 20px;
-`;
 
 const Row = styled.div`
   display: flex;
