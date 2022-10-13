@@ -1,17 +1,16 @@
 import type { NextPage } from 'next';
-import AppLogo from '@components/AppLogo';
 import styled from '@emotion/styled';
 import Text from '@components/Text';
 import CityCardItem from '@components/CityCardItem';
 import PlaceCardItem from '@components/PlaceCardItem';
 import colors from '@constants/colors';
+import Footer from '@components/Footer';
+import Header from '@components/Header';
 
 const Home: NextPage = () => {
   return (
     <Container>
-      <Header>
-        <AppLogo />
-      </Header>
+      <Header />
       <ContentBox>
         <ContentHeader>
           <Text typographyType={'t5'} fontWeight={700}>
@@ -55,6 +54,7 @@ const Home: NextPage = () => {
           <PlaceCardItem />
         </ContentItemBox>
       </ContentBox>
+      <Footer />
     </Container>
   );
 };
@@ -62,10 +62,7 @@ const Home: NextPage = () => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const Header = styled.div`
-  padding: 10px 30px 0;
+  padding-bottom: 50px;
 `;
 
 const ContentBox = styled.div`
