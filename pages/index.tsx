@@ -6,8 +6,11 @@ import PlaceCardItem from '@components/PlaceCardItem';
 import colors from '@constants/colors';
 import Footer from '@components/Footer';
 import Header from '@components/Header';
+import { useRouter } from 'next/router';
 
 const Home: NextPage = () => {
+  const router = useRouter();
+
   return (
     <Container>
       <Header />
@@ -16,7 +19,7 @@ const Home: NextPage = () => {
           <Text typographyType={'t5'} fontWeight={700}>
             여행지
           </Text>
-          <Text typographyType={'t6'} fontWeight={700} color={colors.primary2}>
+          <Text onClick={() => router.push('/city')} typographyType={'t6'} fontWeight={700} color={colors.primary2}>
             전체보기
           </Text>
         </ContentHeader>
