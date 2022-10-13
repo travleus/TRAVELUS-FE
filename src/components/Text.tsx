@@ -1,4 +1,4 @@
-import { AllHTMLAttributes, Fragment, ReactNode } from 'react';
+import { AllHTMLAttributes, Fragment, ReactNode, Ref, forwardRef } from 'react';
 import { css } from '@emotion/react';
 import { Hash } from '@utils/types';
 
@@ -32,18 +32,22 @@ interface Props {
   color?: string;
 }
 
-type TextProps<Element extends keyof JSX.IntrinsicElements = 'span'> = Props & AllHTMLAttributes<Element>;
+type TextProps = Props & AllHTMLAttributes<HTMLSpanElement>;
 
-function Text<Element extends keyof JSX.IntrinsicElements = 'span'>(props: TextProps<Element>) {
-  const { children, typographyType, fontWeight, color, className } = props as TextProps;
+function Text(props: TextProps, ref: Ref<HTMLElement>) {
+  const { children, typographyType, fontWeight, color, className, onClick, ...rest } = props as TextProps;
   return (
     <span
+      ref={ref}
       css={css`
         font-size: ${TypographyHash[typographyType]}px;
         font-weight: ${fontWeight};
         color: ${color};
+        cursor: ${onClick ? 'pointer' : 'initial'};
       `}
-      className={className}>
+      className={className}
+      onClick={onClick}
+      {...rest}>
       {typeof children === 'string' ? convertNewLineToJSX(children) : children}
     </span>
   );
@@ -58,4 +62,4 @@ function convertNewLineToJSX(str: string) {
   ));
 }
 
-export default Text;
+export default forwardRef(Text);
