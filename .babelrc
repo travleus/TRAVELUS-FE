@@ -25,8 +25,16 @@
           "@hooks": "./src/hooks",
           "@components": "./src/components"
         }
-      },
-      "@emotion/babel-plugin"
+      }
+    ],
+    [
+      "@emotion",
+      {
+        "sourceMap": true,
+        "autoLabel": "dev-only",
+        "labelFormat": "[local]",
+        "cssPropOptimization": true
+      }
     ]
   ]
 }
