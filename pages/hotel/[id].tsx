@@ -28,6 +28,7 @@ const Hotel: NextPage = () => {
           object-fit: cover;
         `}
         src={'/dummy.jpeg'}
+        alt={'dummy'}
       />
 
       <div

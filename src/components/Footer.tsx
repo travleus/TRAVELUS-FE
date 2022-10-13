@@ -61,6 +61,7 @@ function NavLink({ href }: NavLinkProps) {
       <Text
         css={css`
           margin-top: 4px;
+          cursor: pointer;
         `}
         typographyType={'t7'}
         color={isCurrentPage ? colors.text1 : colors.text4}>
