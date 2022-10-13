@@ -1,13 +1,22 @@
 import Text from '@components/Text';
 import colors from '@constants/colors';
 import { css } from '@emotion/react';
+import { useRouter } from 'next/router';
 
-function CityCardItem() {
+interface Props {
+  filled?: boolean;
+  height?: number;
+}
+
+function CityCardItem({ filled = false, height = 170 }: Props) {
+  const router = useRouter();
+
   return (
     <div
+      onClick={() => router.push('/city/jeju')}
       css={css`
-        width: 130px;
-        height: 170px;
+        width: ${filled ? '100%' : '130px'};
+        height: ${height}px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -22,14 +31,14 @@ function CityCardItem() {
           filter: brightness(80%);
 
           &:hover {
-            transform: scale(1.08);
+            transform: ${filled ? '' : 'scale(1.08)'};
             transition: 0.5s;
             filter: brightness(100%);
           }
         `}
-        width={130}
-        height={170}
-        src={'cities/jeju.jpeg'}
+        width={filled ? '100%' : '130px'}
+        height={height}
+        src={'/cities/jeju.jpeg'}
         alt={'city'}
       />
       <Text
