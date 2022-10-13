@@ -17,9 +17,9 @@ function PlaceCardItem() {
           border-radius: 5px;
           margin-bottom: 5px;
         `}
-        width={220}
+        width={210}
         height={180}
-        src={'dummy.jpeg'}
+        src={'/dummy.jpeg'}
       />
       <Text typographyType={'t7'} color={colors.text3}>
         제주도
@@ -29,7 +29,7 @@ function PlaceCardItem() {
       </Text>
       <div
         css={css`
-          margin-top: 5px;
+          margin-top: 6px;
           margin-left: auto;
           display: flex;
         `}>
