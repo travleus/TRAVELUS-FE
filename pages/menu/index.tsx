@@ -38,7 +38,13 @@ const Menu: NextPage = () => {
             left={kakao ? kakao : '로그인'}
             right={
               kakao ? (
-                <Text typographyType={'t7'} color={colors.text4} fontWeight={500}>
+                <Text
+                  css={css`
+                    cursor: pointer;
+                  `}
+                  typographyType={'t7'}
+                  color={colors.text4}
+                  fontWeight={500}>
                   로그아웃
                 </Text>
               ) : (
@@ -81,6 +87,12 @@ function Item({ src, left, right, onClick }: ItemProps) {
         cursor: pointer;
         height: 40px;
         margin-top: 15px;
+
+        &:hover {
+          background-color: ${colors.background};
+          border-radius: 5px;
+          padding: 5px;
+        }
       `}>
       <img
         css={css`
@@ -97,7 +109,13 @@ function Item({ src, left, right, onClick }: ItemProps) {
           justify-content: space-between;
           flex: 1;
         `}>
-        <Text typographyType={'t5'} color={colors.text2} fontWeight={500}>
+        <Text
+          css={css`
+            cursor: pointer;
+          `}
+          typographyType={'t5'}
+          color={colors.text2}
+          fontWeight={500}>
           {left}
         </Text>
         {right}

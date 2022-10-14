@@ -69,7 +69,7 @@ const Container = styled.div`
 `;
 
 const ContentBox = styled.div`
-  padding: 10px 30px 15px;
+  padding: 10px 30px 20px;
 `;
 
 const ContentHeader = styled.div`

@@ -15,7 +15,7 @@ function CityCardItem({ filled = false, height = 170 }: Props) {
     <div
       onClick={() => router.push('/city/jeju')}
       css={css`
-        width: ${filled ? '100%' : '130px'};
+        width: ${filled ? '100%' : '120px'};
         height: ${height}px;
         display: flex;
         align-items: center;
@@ -36,7 +36,7 @@ function CityCardItem({ filled = false, height = 170 }: Props) {
             filter: brightness(100%);
           }
         `}
-        width={filled ? '100%' : '130px'}
+        width={filled ? '100%' : '120px'}
         height={height}
         src={'/cities/jeju.jpeg'}
         alt={'city'}
