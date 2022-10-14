@@ -4,12 +4,13 @@ import { useRouter } from 'next/router';
 import colors from '@constants/colors';
 import styled from '@emotion/styled';
 import { Hash } from '@utils/types';
+import { useCallback } from 'react';
 
 function Footer() {
   return (
     <Container>
       <FooterBox>
-        <NavLink href={'/'} />
+        <NavLink href={'/home'} />
         <NavLink href={'/plan'} />
         <NavLink href={'/menu'} />
       </FooterBox>
@@ -41,21 +42,29 @@ interface NavLinkProps {
 }
 
 const routeHash: Hash<string> = {
-  '/': '홈',
+  '/home': '홈',
   '/plan': '계획',
   '/menu': '메뉴',
 };
 
 function NavLink({ href }: NavLinkProps) {
   const router = useRouter();
-  const isCurrentPage = href === '/' + router.asPath.split('/')[1];
+
+  const isCurrentPage = useCallback(() => {
+    if (href === '/home') return '/' === '/' + router.asPath.split('/')[1];
+    else return href === '/' + router.asPath.split('/')[1];
+  }, [href, router]);
+
+  const onRoute = useCallback(() => {
+    href === '/home' ? router.push('/') : router.push(href);
+  }, [href, router]);
 
   return (
-    <NavContainer onClick={() => router.push(href)}>
+    <NavContainer onClick={onRoute}>
       <img
         width={20}
         height={20}
-        src={isCurrentPage ? `/icons${href}_active.png` : `/icons${href}.png`}
+        src={isCurrentPage() ? `/icons${href}_active.png` : `/icons${href}.png`}
         alt={`${href}_icon`}
       />
       <Text
@@ -64,7 +73,7 @@ function NavLink({ href }: NavLinkProps) {
           cursor: pointer;
         `}
         typographyType={'t7'}
-        color={isCurrentPage ? colors.text1 : colors.text4}>
+        color={isCurrentPage() ? colors.text1 : colors.text4}>
         {routeHash[href]}
       </Text>
     </NavContainer>
