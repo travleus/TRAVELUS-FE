@@ -17,5 +17,5 @@ export const TopContainer = styled.div`
 `;
 
 export const MainContainer = styled.div`
-  padding-top: 20px;
+  padding-top: 30px;
 `;
