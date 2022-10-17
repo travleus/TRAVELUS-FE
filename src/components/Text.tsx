@@ -43,7 +43,7 @@ function Text(props: TextProps, ref: Ref<HTMLElement>) {
         font-size: ${TypographyHash[typographyType]}px;
         font-weight: ${fontWeight};
         color: ${color};
-        cursor: ${onClick ? 'pointer' : 'initial'};
+        cursor: ${onClick ? 'pointer' : 'inherit'};
       `}
       className={className}
       onClick={onClick}
