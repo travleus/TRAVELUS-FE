@@ -95,7 +95,6 @@ const Hotel: NextPage = () => {
             <TagItem mr={true} />
             <TagItem mr={true} />
           </div>
-          ¬
         </div>
         <BottomCTA onClick={onClickButton}>담아두기</BottomCTA>
       </div>
