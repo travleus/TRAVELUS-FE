@@ -2,11 +2,11 @@ import type { NextPage } from 'next';
 import styled from '@emotion/styled';
 import Text from '@components/Text';
 import CityCardItem from '@components/CityCardItem';
-import PlaceCardItem from '@components/PlaceCardItem';
 import colors from '@constants/colors';
 import Footer from '@components/Footer';
 import Header from '@components/Header';
 import { useRouter } from 'next/router';
+import PlaceItem from '@components/PlaceItem';
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -38,11 +38,11 @@ const Home: NextPage = () => {
             인기 명소
           </Text>
         </ContentHeader>
-        <ContentItemBox>
-          <PlaceCardItem />
-          <PlaceCardItem />
-          <PlaceCardItem />
-        </ContentItemBox>
+        <div>
+          <PlaceItem />
+          <PlaceItem />
+          <PlaceItem />
+        </div>
       </ContentBox>
       <Divider />
       <ContentBox>
@@ -51,11 +51,11 @@ const Home: NextPage = () => {
             인기 음식점
           </Text>
         </ContentHeader>
-        <ContentItemBox>
-          <PlaceCardItem />
-          <PlaceCardItem />
-          <PlaceCardItem />
-        </ContentItemBox>
+        <div>
+          <PlaceItem />
+          <PlaceItem />
+          <PlaceItem />
+        </div>
       </ContentBox>
       <Footer />
     </Container>
@@ -82,6 +82,11 @@ const ContentHeader = styled.div`
 const ContentItemBox = styled.div`
   display: flex;
   justify-content: space-between;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    justify-content: initial;
+  }
 `;
 
 const Divider = styled.div`
