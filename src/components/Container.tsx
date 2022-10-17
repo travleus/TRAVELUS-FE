@@ -19,3 +19,8 @@ export const TopContainer = styled.div`
 export const MainContainer = styled.div`
   padding-top: 30px;
 `;
+
+export const FlexRowCenterContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
