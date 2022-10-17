@@ -22,9 +22,17 @@ function CityCardItem({ filled = false, height = 170 }: Props) {
         justify-content: center;
         position: relative;
         cursor: pointer;
+
+        @media screen and (max-width: 768px) {
+          width: 100%;
+          height: 80px;
+          margin-bottom: 10px;
+        }
       `}>
       <img
         css={css`
+          width: ${filled ? '100%' : '120px'};
+          height: ${height}px;
           position: absolute;
           object-fit: cover;
           border-radius: 12px;
@@ -35,9 +43,12 @@ function CityCardItem({ filled = false, height = 170 }: Props) {
             transition: 0.5s;
             filter: brightness(100%);
           }
+
+          @media screen and (max-width: 768px) {
+            width: 100%;
+            height: 80px;
+          }
         `}
-        width={filled ? '100%' : '120px'}
-        height={height}
         src={'/cities/jeju.jpeg'}
         alt={'city'}
       />

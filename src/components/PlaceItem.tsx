@@ -45,6 +45,11 @@ const PlaceImage = styled.img`
   object-fit: cover;
   border-radius: 5px;
   margin-right: 10px;
+
+  @media screen and (max-width: 768px) {
+    width: 80px;
+    height: 80px;
+  }
 `;
 
 const ContentWrapper = styled.div`
@@ -52,6 +57,10 @@ const ContentWrapper = styled.div`
   height: 100px;
   margin-right: 15px;
   cursor: pointer;
+
+  @media screen and (max-width: 768px) {
+    height: 80px;
+  }
 `;
 
 const TitleWrapper = styled.div`

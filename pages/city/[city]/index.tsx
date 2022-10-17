@@ -6,6 +6,7 @@ import colors from '@constants/colors';
 import CityCardItem from '@components/CityCardItem';
 import Header from '@components/Header';
 import { useRouter } from 'next/router';
+import PlaceItem from '@components/PlaceItem';
 
 const City: NextPage = () => {
   const router = useRouter();
@@ -29,11 +30,11 @@ const City: NextPage = () => {
             전체보기
           </Text>
         </ContentHeader>
-        <ContentItemBox>
-          <PlaceCardItem />
-          <PlaceCardItem />
-          <PlaceCardItem />
-        </ContentItemBox>
+        <div>
+          <PlaceItem />
+          <PlaceItem />
+          <PlaceItem />
+        </div>
       </ContentBox>
       <ContentBox>
         <ContentHeader>
@@ -48,11 +49,11 @@ const City: NextPage = () => {
             전체보기
           </Text>
         </ContentHeader>
-        <ContentItemBox>
-          <PlaceCardItem />
-          <PlaceCardItem />
-          <PlaceCardItem />
-        </ContentItemBox>
+        <div>
+          <PlaceItem />
+          <PlaceItem />
+          <PlaceItem />
+        </div>
       </ContentBox>
       <ContentBox>
         <ContentHeader>
@@ -67,11 +68,11 @@ const City: NextPage = () => {
             전체보기
           </Text>
         </ContentHeader>
-        <ContentItemBox>
-          <PlaceCardItem />
-          <PlaceCardItem />
-          <PlaceCardItem />
-        </ContentItemBox>
+        <div>
+          <PlaceItem />
+          <PlaceItem />
+          <PlaceItem />
+        </div>
       </ContentBox>
       <ContentBox>
         <ContentHeader>
@@ -86,11 +87,11 @@ const City: NextPage = () => {
             전체보기
           </Text>
         </ContentHeader>
-        <ContentItemBox>
-          <PlaceCardItem />
-          <PlaceCardItem />
-          <PlaceCardItem />
-        </ContentItemBox>
+        <div>
+          <PlaceItem />
+          <PlaceItem />
+          <PlaceItem />
+        </div>
       </ContentBox>
     </div>
   );
