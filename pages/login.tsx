@@ -5,8 +5,8 @@ import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { checkMember, getMember, Member, registerMember, RegisterMember } from '@apis/member';
-import colors from '@constants/colors';
 import Script from 'next/script';
+import Loading from '@components/Loading';
 
 interface login {
   access_token: string;
@@ -97,11 +97,7 @@ const Login: NextPage = () => {
 
       <AppLogo />
       <KaKaoImage onClick={handleClickKaKaoLogin} src={'icons/kakao_login_large_narrow.png'} />
-      {loading && (
-        <LoadingBox>
-          <Loading />
-        </LoadingBox>
-      )}
+      {loading && <Loading />}
     </Container>
   );
 };
@@ -118,37 +114,6 @@ const KaKaoImage = styled.img`
   width: 180px;
   cursor: pointer;
   margin-top: 30px;
-`;
-
-const LoadingBox = styled.div`
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.3);
-`;
-
-const Loading = styled.span`
-  position: fixed;
-  top: 50%;
-  display: inline-block;
-  width: 40px;
-  height: 40px;
-  border: 3px solid ${colors.primary2};
-  border-radius: 50%;
-  border-top-color: white;
-  animation: spin 1s ease-in-out infinite;
-  -webkit-animation: spin 1s ease-in-out infinite;
-  @keyframes spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
 `;
 
 export default Login;
