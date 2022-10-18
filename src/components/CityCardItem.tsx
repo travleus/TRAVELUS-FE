@@ -2,18 +2,21 @@ import Text from '@components/Text';
 import colors from '@constants/colors';
 import { css } from '@emotion/react';
 import { useRouter } from 'next/router';
+import { Region } from '@apis/region';
+import LazyImage from '@components/LazyImage';
 
 interface Props {
+  region: Region;
   filled?: boolean;
   height?: number;
 }
 
-function CityCardItem({ filled = false, height = 170 }: Props) {
+function CityCardItem({ region, filled = false, height = 170 }: Props) {
   const router = useRouter();
 
   return (
     <div
-      onClick={() => router.push('/city/jeju')}
+      onClick={() => router.push(`/city/${region.id}`)}
       css={css`
         width: ${filled ? '100%' : '120px'};
         height: ${height}px;
@@ -29,7 +32,7 @@ function CityCardItem({ filled = false, height = 170 }: Props) {
           margin-bottom: 10px;
         }
       `}>
-      <img
+      <LazyImage
         css={css`
           width: ${filled ? '100%' : '120px'};
           height: ${height}px;
@@ -49,7 +52,7 @@ function CityCardItem({ filled = false, height = 170 }: Props) {
             height: 80px;
           }
         `}
-        src={'/cities/jeju.jpeg'}
+        src={region.pictureUrl}
         alt={'city'}
       />
       <Text
@@ -59,7 +62,7 @@ function CityCardItem({ filled = false, height = 170 }: Props) {
         typographyType={'t5'}
         fontWeight={500}
         color={colors.white}>
-        제주도
+        {region.region}
       </Text>
     </div>
   );

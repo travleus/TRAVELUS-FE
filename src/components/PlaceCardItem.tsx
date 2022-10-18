@@ -2,6 +2,7 @@ import Text from '@components/Text';
 import { css } from '@emotion/react';
 import colors from '@constants/colors';
 import TagItem from '@components/TagItem';
+import LazyImage from '@components/LazyImage';
 
 function PlaceCardItem() {
   return (
@@ -11,14 +12,14 @@ function PlaceCardItem() {
         flex-direction: column;
         cursor: pointer;
       `}>
-      <img
+      <LazyImage
         alt={'place'}
         css={css`
+          width: 210px;
+          height: 180px;
           border-radius: 5px;
           margin-bottom: 5px;
         `}
-        width={210}
-        height={180}
         src={'/dummy.jpeg'}
       />
       <Text typographyType={'t7'} color={colors.text3}>

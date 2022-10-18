@@ -4,46 +4,41 @@ import styled from '@emotion/styled';
 import BackButton from '@components/BackButton';
 import { useRouter } from 'next/router';
 import { Container, TopContainer, MainContainer } from '@components/Container';
+import { useFetchAllRegion } from '@hooks/queries';
+import { Region } from '@apis/region';
+import Loading from '@components/Loading';
 
 const AllCity: NextPage = () => {
+  const allRegion = useFetchAllRegion();
+  const totalArray = new Array(4).fill(0);
+
   return (
-    <Container>
-      <BackButton />
-      <TopContainer>
-        <Text typographyType={'t3'} fontWeight={700}>
-          어디로 떠날까요?
-        </Text>
-        <Text typographyType={'t5'} fontWeight={700}>
-          여행지
-        </Text>
-      </TopContainer>
-      <MainContainer>
-        <Row>
-          <City />
-          <City />
-          <City />
-          <City />
-        </Row>
-        <Row>
-          <City />
-          <City />
-          <City />
-          <City />
-        </Row>
-        <Row>
-          <City />
-          <City />
-          <City />
-          <City />
-        </Row>
-        <Row>
-          <City />
-          <City />
-          <City />
-          <City />
-        </Row>
-      </MainContainer>
-    </Container>
+    <>
+      {allRegion.data ? (
+        <Container>
+          <BackButton />
+          <TopContainer>
+            <Text typographyType={'t3'} fontWeight={700}>
+              어디로 떠날까요?
+            </Text>
+            <Text typographyType={'t5'} fontWeight={700}>
+              여행지
+            </Text>
+          </TopContainer>
+          <MainContainer>
+            {totalArray.map((value, key) => (
+              <Row key={key}>
+                {totalArray.map(
+                  (v, i) => allRegion.data && <City key={key + i} region={allRegion.data[4 * key + i]} />
+                )}
+              </Row>
+            ))}
+          </MainContainer>
+        </Container>
+      ) : (
+        <Loading />
+      )}
+    </>
   );
 };
 
@@ -57,14 +52,18 @@ const Row = styled.div`
   }
 `;
 
-function City() {
+interface Props {
+  region: Region;
+}
+
+function City({ region }: Props) {
   const router = useRouter();
 
   return (
-    <CityContainer onClick={() => router.push('/city/jeju')}>
-      <CityImage src={'/cities/jeju.jpeg'} />
+    <CityContainer onClick={() => router.push(`/city/${region.id}`)}>
+      <CityImage src={region.pictureUrl} />
       <Text typographyType={'t7'} fontWeight={600}>
-        제주도
+        {region.region}
       </Text>
     </CityContainer>
   );

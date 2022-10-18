@@ -13,7 +13,7 @@ const Menu: NextPage = () => {
 
   useEffect(() => {
     setKakao(window.localStorage.getItem('kakao'));
-  });
+  }, [setKakao]);
 
   const onLogin = () => {
     router.push('/login');
@@ -101,6 +101,7 @@ function Item({ src, left, right, onClick }: ItemProps) {
         width={25}
         height={25}
         src={src}
+        alt={'left_icon'}
       />
       <div
         css={css`
