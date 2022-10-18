@@ -33,12 +33,12 @@ function SelectItem({ onClose }: Props) {
       `}>
       <img
         css={css`
+          width: 140px;
+          height: 100px;
           border-radius: 8px;
           filter: brightness(70%);
           margin-right: 15px;
         `}
-        width={140}
-        height={100}
         src={'/cities/jeju.jpeg'}
         alt={'city'}
       />

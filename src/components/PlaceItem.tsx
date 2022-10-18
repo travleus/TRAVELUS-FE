@@ -4,13 +4,29 @@ import TagItem from '@components/TagItem';
 import colors from '@constants/colors';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
+import LazyImage from '@components/LazyImage';
 
 function PlaceItem() {
   const router = useRouter();
 
   return (
     <Wrapper>
-      <PlaceImage src={'/dummy.jpeg'} alt={'item'} />
+      <LazyImage
+        css={css`
+          width: 100px;
+          height: 100px;
+          object-fit: cover;
+          border-radius: 5px;
+          margin-right: 10px;
+
+          @media screen and (max-width: 768px) {
+            width: 80px;
+            height: 80px;
+          }
+        `}
+        src={'/dummy.jpeg'}
+        alt={'item'}
+      />
       <ContentWrapper onClick={() => router.push('/hotel/1')}>
         <TitleWrapper>
           <Text
@@ -37,19 +53,6 @@ const Wrapper = styled.div`
   flex: 1;
   align-items: center;
   margin-bottom: 15px;
-`;
-
-const PlaceImage = styled.img`
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 5px;
-  margin-right: 10px;
-
-  @media screen and (max-width: 768px) {
-    width: 80px;
-    height: 80px;
-  }
 `;
 
 const ContentWrapper = styled.div`

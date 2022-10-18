@@ -7,58 +7,65 @@ import Footer from '@components/Footer';
 import Header from '@components/Header';
 import { useRouter } from 'next/router';
 import PlaceItem from '@components/PlaceItem';
+import { useFetchRegionOrdered } from '@hooks/queries';
+import Loading from '@components/Loading';
 
 const Home: NextPage = () => {
   const router = useRouter();
+  const regionOrdered = useFetchRegionOrdered(5, 1);
 
   return (
-    <Container>
-      <Header />
-      <ContentBox>
-        <ContentHeader>
-          <Text typographyType={'t5'} fontWeight={700}>
-            여행지
-          </Text>
-          <Text onClick={() => router.push('/city')} typographyType={'t6'} fontWeight={700} color={colors.primary2}>
-            전체보기
-          </Text>
-        </ContentHeader>
-        <ContentItemBox>
-          <CityCardItem />
-          <CityCardItem />
-          <CityCardItem />
-          <CityCardItem />
-          <CityCardItem />
-        </ContentItemBox>
-      </ContentBox>
-      <Divider />
-      <ContentBox>
-        <ContentHeader>
-          <Text typographyType={'t5'} fontWeight={700}>
-            인기 명소
-          </Text>
-        </ContentHeader>
-        <div>
-          <PlaceItem />
-          <PlaceItem />
-          <PlaceItem />
-        </div>
-      </ContentBox>
-      <Divider />
-      <ContentBox>
-        <ContentHeader>
-          <Text typographyType={'t5'} fontWeight={700}>
-            인기 음식점
-          </Text>
-        </ContentHeader>
-        <div>
-          <PlaceItem />
-          <PlaceItem />
-          <PlaceItem />
-        </div>
-      </ContentBox>
-      <Footer />
-    </Container>
+    <>
+      {regionOrdered.data ? (
+        <Container>
+          <Header />
+          <ContentBox>
+            <ContentHeader>
+              <Text typographyType={'t5'} fontWeight={700}>
+                여행지
+              </Text>
+              <Text onClick={() => router.push('/city')} typographyType={'t6'} fontWeight={700} color={colors.primary2}>
+                전체보기
+              </Text>
+            </ContentHeader>
+            <ContentItemBox>
+              {regionOrdered.data.content.map(region => (
+                <CityCardItem key={region.id} region={region} />
+              ))}
+            </ContentItemBox>
+          </ContentBox>
+          <Divider />
+          <ContentBox>
+            <ContentHeader>
+              <Text typographyType={'t5'} fontWeight={700}>
+                인기 명소
+              </Text>
+            </ContentHeader>
+            <div>
+              <PlaceItem />
+              <PlaceItem />
+              <PlaceItem />
+            </div>
+          </ContentBox>
+          <Divider />
+          <ContentBox>
+            <ContentHeader>
+              <Text typographyType={'t5'} fontWeight={700}>
+                인기 음식점
+              </Text>
+            </ContentHeader>
+            <div>
+              <PlaceItem />
+              <PlaceItem />
+              <PlaceItem />
+            </div>
+          </ContentBox>
+          <Footer />
+        </Container>
+      ) : (
+        <Loading />
+      )}
+    </>
   );
 };
 
