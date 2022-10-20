@@ -5,6 +5,7 @@ import { QueryClient } from '@tanstack/query-core';
 import { QueryClientProvider, Hydrate } from '@tanstack/react-query';
 import { useState } from 'react';
 import AppLayout from '@components/AppLayout';
+import { wrapper } from '@stores/index';
 
 function MyApp({ Component, pageProps }: AppProps<{ dehydratedState: unknown }>) {
   const [queryClient] = useState(
@@ -27,4 +28,4 @@ function MyApp({ Component, pageProps }: AppProps<{ dehydratedState: unknown }>)
   );
 }
 
-export default MyApp;
+export default wrapper.withRedux(MyApp);
