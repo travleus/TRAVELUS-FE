@@ -10,6 +10,7 @@ const TypographyType = {
   t5: 't5',
   t6: 't6',
   t7: 't7',
+  t8: 't8',
 } as const;
 
 export type TypographyValue = typeof TypographyType[keyof typeof TypographyType];
@@ -22,6 +23,7 @@ const TypographyHash: Hash<number> = {
   t5: 16,
   t6: 14,
   t7: 12,
+  t8: 10,
 };
 
 interface Props {
