@@ -3,10 +3,10 @@ import Text from '@components/Text';
 import colors from '@constants/colors';
 import Modal from '@components/Modal';
 import { Region } from '@apis/region';
-import { Sights } from '@apis/sights';
+import { Place } from '@apis/place';
 
 interface Props {
-  place: Region | Sights;
+  place: Region | Place;
   onClose: () => void;
 }
 
