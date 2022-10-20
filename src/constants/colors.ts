@@ -14,6 +14,7 @@ const colors = {
   tag4: '#79C75E',
   tag5: '#E1A64E',
   white: '#FFFFFF',
+  red: '#f55757',
 };
 
 export default colors;

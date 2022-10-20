@@ -13,6 +13,7 @@ function EmptyContent() {
         align-items: center;
         background-color: ${colors.background};
         border-radius: 5px;
+        margin-bottom: 15px;
       `}>
       <Text typographyType={'t7'} fontWeight={500}>
         {' '}

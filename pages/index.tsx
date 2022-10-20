@@ -6,20 +6,25 @@ import colors from '@constants/colors';
 import Footer from '@components/Footer';
 import Header from '@components/Header';
 import { useRouter } from 'next/router';
-import PlaceItem from '@components/PlaceItem';
-import { useFetchRegionOrdered } from '@hooks/queries';
+import { useFetchPlaceOrdered, useFetchRegionOrdered } from '@hooks/queries';
 import Loading from '@components/Loading';
+import { ContentContainer, Divider } from '@components/Container';
+import PlaceItem from '@components/PlaceItem';
 
 const Home: NextPage = () => {
   const router = useRouter();
-  const regionOrdered = useFetchRegionOrdered(5, 1);
+  const regionOrdered = useFetchRegionOrdered(5, 0);
+  const hotelOrdered = useFetchPlaceOrdered('hotel', 3, 0);
+  const sightsOrdered = useFetchPlaceOrdered('hotplace', 3, 0);
+  const restaurantOrdered = useFetchPlaceOrdered('restaurant', 3, 0);
+  const cafeOrdered = useFetchPlaceOrdered('cafe', 3, 0);
 
   return (
     <>
       {regionOrdered.data ? (
         <Container>
           <Header />
-          <ContentBox>
+          <ContentContainer>
             <ContentHeader>
               <Text typographyType={'t5'} fontWeight={700}>
                 여행지
@@ -33,33 +38,59 @@ const Home: NextPage = () => {
                 <CityCardItem key={region.id} region={region} />
               ))}
             </ContentItemBox>
-          </ContentBox>
+          </ContentContainer>
           <Divider />
-          <ContentBox>
+          <ContentContainer>
+            <ContentHeader>
+              <Text typographyType={'t5'} fontWeight={700}>
+                인기 호텔
+              </Text>
+            </ContentHeader>
+            <div>
+              {hotelOrdered.data?.content.map(hotel => (
+                <PlaceItem key={hotel.id} place={hotel} region={true} />
+              ))}
+            </div>
+          </ContentContainer>
+          <Divider />
+          <ContentContainer>
             <ContentHeader>
               <Text typographyType={'t5'} fontWeight={700}>
                 인기 명소
               </Text>
             </ContentHeader>
             <div>
-              <PlaceItem />
-              <PlaceItem />
-              <PlaceItem />
+              {sightsOrdered.data?.content.map(sights => (
+                <PlaceItem key={sights.id} place={sights} region={true} />
+              ))}
             </div>
-          </ContentBox>
+          </ContentContainer>
           <Divider />
-          <ContentBox>
+          <ContentContainer>
             <ContentHeader>
               <Text typographyType={'t5'} fontWeight={700}>
                 인기 음식점
               </Text>
             </ContentHeader>
             <div>
-              <PlaceItem />
-              <PlaceItem />
-              <PlaceItem />
+              {restaurantOrdered.data?.content.map(restaurant => (
+                <PlaceItem key={restaurant.id} place={restaurant} region={true} />
+              ))}
             </div>
-          </ContentBox>
+          </ContentContainer>
+          <Divider />
+          <ContentContainer>
+            <ContentHeader>
+              <Text typographyType={'t5'} fontWeight={700}>
+                인기 카페
+              </Text>
+            </ContentHeader>
+            <div>
+              {cafeOrdered.data?.content.map(cafe => (
+                <PlaceItem key={cafe.id} place={cafe} region={true} />
+              ))}
+            </div>
+          </ContentContainer>
           <Footer />
         </Container>
       ) : (
@@ -73,10 +104,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding-bottom: 50px;
-`;
-
-const ContentBox = styled.div`
-  padding: 10px 30px 20px;
 `;
 
 const ContentHeader = styled.div`
@@ -94,12 +121,6 @@ const ContentItemBox = styled.div`
     flex-direction: column;
     justify-content: initial;
   }
-`;
-
-const Divider = styled.div`
-  width: 100%;
-  height: 10px;
-  background-color: ${colors.background};
 `;
 
 export default Home;

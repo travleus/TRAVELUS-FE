@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
 import AppLogo from '@components/AppLogo';
+import { HeaderContainer } from '@components/Container';
 
 function Header() {
   return (
@@ -8,9 +8,5 @@ function Header() {
     </HeaderContainer>
   );
 }
-
-const HeaderContainer = styled.div`
-  padding: 10px 30px 0;
-`;
 
 export default Header;

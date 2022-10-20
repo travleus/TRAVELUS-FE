@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Region } from '@apis/region';
-import { Place } from '@utils/types';
+import { Place } from '@apis/place';
 
 export interface Plan {
   step: number;

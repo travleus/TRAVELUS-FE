@@ -26,9 +26,7 @@ const Like: NextPage = () => {
           </Text>
         </FlexRowCenterContainer>
       </TopContainer>
-      <MainContainer>
-        <LikeItem />
-      </MainContainer>
+      <MainContainer>{/*<LikeItem place={}/>*/}</MainContainer>
       <Footer />
     </Container>
   );

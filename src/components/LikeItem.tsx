@@ -2,11 +2,16 @@ import PlaceItem from '@components/PlaceItem';
 import { css } from '@emotion/react';
 import { FlexRowCenterContainer } from '@components/Container';
 import LazyImage from '@components/LazyImage';
+import { Place } from '@apis/place';
 
-function LikeItem() {
+interface Props {
+  place: Place;
+}
+
+function LikeItem({ place }: Props) {
   return (
     <FlexRowCenterContainer>
-      <PlaceItem />
+      <PlaceItem place={place} />
       <LazyImage
         css={css`
           width: 10px;

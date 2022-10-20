@@ -2,12 +2,15 @@ import { css } from '@emotion/react';
 import Text from '@components/Text';
 import colors from '@constants/colors';
 import Modal from '@components/Modal';
+import { Region } from '@apis/region';
+import { Place } from '@apis/place';
 
 interface Props {
+  place: Region | Place;
   onClose: () => void;
 }
 
-function Select({ onClose }: Props) {
+function Select({ place, onClose }: Props) {
   return (
     <Modal>
       <Text
@@ -18,7 +21,7 @@ function Select({ onClose }: Props) {
         fontWeight={600}>
         선택된 도시
       </Text>
-      <SelectItem onClose={onClose} />
+      <SelectItem place={place} onClose={onClose} />
     </Modal>
   );
 }
