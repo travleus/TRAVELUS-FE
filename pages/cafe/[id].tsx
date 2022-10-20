@@ -13,8 +13,8 @@ import styled from '@emotion/styled';
 const Hotel: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const hotel = useFetchPlace('hotel', Number(id));
-  const tagList = hotel.data?.tag.split('#').splice(1);
+  const cafe = useFetchPlace('cafe', Number(id));
+  const tagList = cafe.data?.tag.split('#').splice(1);
 
   const onClickButton = () => {
     // Todo
@@ -22,12 +22,12 @@ const Hotel: NextPage = () => {
 
   return (
     <>
-      {hotel.data && tagList ? (
+      {cafe.data && tagList ? (
         <div>
           <TopWrapper>
             <BackButton />
           </TopWrapper>
-          <PlaceImage src={hotel.data.pictureUrl} alt={hotel.data.name} />
+          <PlaceImage src={cafe.data.pictureUrl} alt={cafe.data.name} />
           <MainWrapper>
             <MainContentWrapper>
               <Text
@@ -36,14 +36,14 @@ const Hotel: NextPage = () => {
                 `}
                 typographyType={'t7'}
                 color={colors.text4}>
-                {hotel.data.region}
+                {cafe.data.region}
               </Text>
               <NameWrapper>
                 <Text typographyType={'t5'} fontWeight={700}>
-                  {hotel.data.name}
+                  {cafe.data.name}
                 </Text>
                 <Text
-                  onClick={() => window.open(hotel.data?.url)}
+                  onClick={() => window.open(cafe.data?.url)}
                   css={css`
                     margin-left: auto;
                     cursor: pointer;
@@ -58,10 +58,10 @@ const Hotel: NextPage = () => {
                 `}
                 typographyType={'t7'}
                 color={colors.text4}>
-                {hotel.data.address}
+                {cafe.data.address}
               </Text>
               <Text typographyType={'t6'} color={colors.text2}>
-                {hotel.data.description}
+                {cafe.data.description}
               </Text>
             </MainContentWrapper>
             <TagWrapper>

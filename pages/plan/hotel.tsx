@@ -1,4 +1,7 @@
 import { NextPage } from 'next';
+import { useState } from 'react';
+import { Region } from '@apis/region';
+import { useFetchAllRegion } from '@hooks/queries';
 import { Container, MainContainer, TopContainer } from '@components/Container';
 import BackButton from '@components/BackButton';
 import Text from '@components/Text';
@@ -6,15 +9,13 @@ import { css } from '@emotion/react';
 import colors from '@constants/colors';
 import Switch from '@components/Switch';
 import Select from '@components/Select';
+import Loading from '@components/Loading';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { Region } from '@apis/region';
-import { useFetchAllRegion } from '@hooks/queries';
 import LazyImage from '@components/LazyImage';
 import styled from '@emotion/styled';
-import Loading from '@components/Loading';
+import PlanProgress from '@components/PlanProgress';
 
-const Plan: NextPage = () => {
+const Hotel: NextPage = () => {
   const [open, setOpen] = useState(false);
   const [region, setRegion] = useState<Region | null>();
   const allRegion = useFetchAllRegion();
@@ -34,7 +35,7 @@ const Plan: NextPage = () => {
               여행 루트 만들기
             </Text>
             <Text typographyType={'t3'} fontWeight={700}>
-              1단계
+              2단계
             </Text>
             <Text
               css={css`
@@ -42,10 +43,11 @@ const Plan: NextPage = () => {
               `}
               typographyType={'t6'}
               fontWeight={700}>
-              도시
+              호텔
             </Text>
           </TopContainer>
           <MainContainer>
+            <PlanProgress />
             <div
               css={css`
                 display: flex;
@@ -168,4 +170,4 @@ const Wrapper = styled.div`
   margin-bottom: 15px;
 `;
 
-export default Plan;
+export default Hotel;

@@ -1,13 +1,21 @@
 import { css } from '@emotion/react';
 import Text from '@components/Text';
-import TagItem from '@components/TagItem';
 import colors from '@constants/colors';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import LazyImage from '@components/LazyImage';
+import { Place } from '@apis/place';
+import TagList from '@components/TagItem';
+import { TargetTypeHash } from '@utils/types';
 
-function PlaceItem() {
+interface Props {
+  place: Place;
+  region?: boolean;
+}
+
+function PlaceItem({ place, region = false }: Props) {
   const router = useRouter();
+  const tagList = place.tag.split('#').splice(1);
 
   return (
     <Wrapper>
@@ -24,10 +32,15 @@ function PlaceItem() {
             height: 80px;
           }
         `}
-        src={'/dummy.jpeg'}
-        alt={'item'}
+        src={place.pictureUrl}
+        alt={place.name}
       />
-      <ContentWrapper onClick={() => router.push('/hotel/1')}>
+      <ContentWrapper onClick={() => router.push(`/${TargetTypeHash[place.targetType]}/${place.id}`)}>
+        {region && (
+          <Text typographyType={'t8'} color={colors.text4}>
+            {place.region}
+          </Text>
+        )}
         <TitleWrapper>
           <Text
             css={css`
@@ -36,12 +49,20 @@ function PlaceItem() {
             typographyType={'t6'}
             color={colors.text2}
             fontWeight={600}>
-            에코랜드 테마파크
+            {place.name}
           </Text>
-          <TagItem />
+          <TagList tagList={tagList} />
         </TitleWrapper>
-        <Text typographyType={'t7'} color={colors.text3}>
-          에코랜드는 제주특별 자치도 제주시 조천읍 대흘리에 위치한 테마파크이다.
+        <Text
+          css={css`
+            display: inline-block;
+            white-space: normal;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          `}
+          typographyType={'t7'}
+          color={colors.text3}>
+          {place.description}
         </Text>
       </ContentWrapper>
     </Wrapper>
@@ -56,9 +77,10 @@ const Wrapper = styled.div`
 `;
 
 const ContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   flex: 1;
   height: 100px;
-  margin-right: 15px;
   cursor: pointer;
 
   @media screen and (max-width: 768px) {
@@ -69,7 +91,7 @@ const ContentWrapper = styled.div`
 const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 `;
 
 export default PlaceItem;

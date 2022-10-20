@@ -29,7 +29,10 @@ function CityCardItem({ region, filled = false, height = 170 }: Props) {
         @media screen and (max-width: 768px) {
           width: 100%;
           height: 80px;
-          margin-bottom: 10px;
+
+          & ~ & {
+            margin-top: 10px;
+          }
         }
       `}>
       <LazyImage
