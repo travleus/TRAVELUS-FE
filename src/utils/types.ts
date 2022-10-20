@@ -26,3 +26,16 @@ export interface Page<T> {
   totalElements: number;
   totalPages: number;
 }
+
+export interface Place {
+  id: number;
+  name: string;
+  tag: string;
+  region: string;
+  pictureUrl: string;
+  useCount: number;
+  description: string;
+  url: string;
+  address: string;
+  type: string;
+}
