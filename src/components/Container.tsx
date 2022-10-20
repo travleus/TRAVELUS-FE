@@ -24,3 +24,12 @@ export const FlexRowCenterContainer = styled.div`
   display: flex;
   align-items: center;
 `;
+
+export const Dot = styled.span<{ color: string }>`
+  width: 7px;
+  height: 7px;
+
+  border: 1px solid white;
+  border-radius: 100%;
+  background-color: ${props => props.color};
+`;
