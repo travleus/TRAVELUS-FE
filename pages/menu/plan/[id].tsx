@@ -10,7 +10,7 @@ import { css } from '@emotion/react';
 import PlaceItem from '@components/PlaceItem';
 import colors from '@constants/colors';
 import styled from '@emotion/styled';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { deleteCourse } from '@apis/course';
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -19,6 +19,7 @@ const PlanDetail: NextPage = () => {
   const { id } = router.query;
   const fetchCourse = useFetchCourseById(Number(id));
   const queryClient = useQueryClient();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (fetchCourse.data) {
@@ -28,9 +29,11 @@ const PlanDetail: NextPage = () => {
 
   const onClickDelete = async () => {
     try {
+      setLoading(true);
       const courseId = Number(id);
       await deleteCourse(courseId);
       await queryClient.invalidateQueries(['courseList', Number(window.localStorage.getItem('id'))]);
+      setLoading(false);
       await router.push('/menu/plan');
       await queryClient.invalidateQueries(['course', courseId]);
     } catch (e) {
@@ -40,7 +43,7 @@ const PlanDetail: NextPage = () => {
 
   return (
     <>
-      {fetchCourse.data ? (
+      {fetchCourse.data && !loading ? (
         <Container>
           <BackButton />
           <TopContainer>
