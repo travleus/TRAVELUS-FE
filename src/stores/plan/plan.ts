@@ -48,8 +48,42 @@ export const planSlice = createSlice({
           break;
       }
     },
+    initStep(state: Plan, action: PayloadAction<string>) {
+      switch (action.payload) {
+        case 'region':
+          state.step = 1;
+          state.region = null;
+          state.hotel = null;
+          state.sights = null;
+          state.restaurant = null;
+          state.cafe = null;
+          break;
+        case 'hotel':
+          state.step = 2;
+          state.hotel = null;
+          state.sights = null;
+          state.restaurant = null;
+          state.cafe = null;
+          break;
+        case 'hotplace':
+          state.step = 3;
+          state.sights = null;
+          state.restaurant = null;
+          state.cafe = null;
+          break;
+        case 'restaurant':
+          state.step = 4;
+          state.restaurant = null;
+          state.cafe = null;
+          break;
+        case 'cafe':
+          state.step = 5;
+          state.cafe = null;
+          break;
+      }
+    },
   },
 });
 
 export default planSlice.reducer;
-export const { nextStep } = planSlice.actions;
+export const { nextStep, initStep } = planSlice.actions;

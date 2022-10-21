@@ -1,8 +1,7 @@
 import { NextPage } from 'next';
-import { useState } from 'react';
-import { Region } from '@apis/region';
-import { useFetchAllRegion } from '@hooks/queries';
-import { Container, MainContainer, TopContainer } from '@components/Container';
+import { useEffect, useState } from 'react';
+import { useFetchPlaceOrderedByRegion } from '@hooks/queries';
+import { Container, FlexRowCenterContainer, MainContainer, TopContainer } from '@components/Container';
 import BackButton from '@components/BackButton';
 import Text from '@components/Text';
 import { css } from '@emotion/react';
@@ -11,23 +10,41 @@ import Switch from '@components/Switch';
 import Select from '@components/Select';
 import Loading from '@components/Loading';
 import { useRouter } from 'next/router';
-import LazyImage from '@components/LazyImage';
-import styled from '@emotion/styled';
 import PlanProgress from '@components/PlanProgress';
+import { Place } from '@apis/place';
+import usePlan from '@stores/plan/planHook';
+import PlaceItem from '@components/PlaceItem';
+import { PlaceHash } from '@utils/types';
+import EmptyContent from '@components/EmptyContent';
 
-const Hotel: NextPage = () => {
+const PlacePage: NextPage = () => {
+  const router = useRouter();
+  const { target } = router.query;
+  const { plan, onInitStep } = usePlan();
   const [open, setOpen] = useState(false);
-  const [region, setRegion] = useState<Region | null>();
-  const allRegion = useFetchAllRegion();
+  const [place, setPlace] = useState<Place | null>();
+  const allPlace = useFetchPlaceOrderedByRegion(target as string, plan.region?.id as number, 100, 0);
 
-  const onClickItem = (region: Region) => {
-    setRegion(region);
+  const onClickItem = (place: Place) => {
+    setPlace(place);
     setOpen(true);
   };
 
+  useEffect(() => {
+    setOpen(false);
+    setPlace(null);
+  }, [setOpen, setPlace, target]);
+
+  useEffect(() => {
+    if (target) {
+      onInitStep(target as string);
+      plan.region || router.push('/plan');
+    }
+  }, [target]);
+
   return (
     <>
-      {allRegion.data ? (
+      {allPlace.data ? (
         <Container>
           <BackButton />
           <TopContainer>
@@ -35,7 +52,7 @@ const Hotel: NextPage = () => {
               여행 루트 만들기
             </Text>
             <Text typographyType={'t3'} fontWeight={700}>
-              2단계
+              {plan.step}단계
             </Text>
             <Text
               css={css`
@@ -43,7 +60,7 @@ const Hotel: NextPage = () => {
               `}
               typographyType={'t6'}
               fontWeight={700}>
-              호텔
+              {PlaceHash[target as string]}
             </Text>
           </TopContainer>
           <MainContainer>
@@ -66,11 +83,15 @@ const Hotel: NextPage = () => {
               </Text>
               <Switch />
             </div>
-            {allRegion.data.map(region => (
-              <CityItem key={region.id} region={region} onClick={() => onClickItem(region)} />
-            ))}
+            {allPlace.data.content.length ? (
+              allPlace.data.content.map(place => (
+                <PlaceSelectItem key={place.id} place={place} onClick={() => onClickItem(place)} />
+              ))
+            ) : (
+              <EmptyContent />
+            )}
           </MainContainer>
-          {open && region && <Select place={region} onClose={() => setOpen(false)} />}
+          {open && place && <Select place={place} onClose={() => setOpen(false)} />}
         </Container>
       ) : (
         <Loading />
@@ -80,68 +101,20 @@ const Hotel: NextPage = () => {
 };
 
 interface Props {
-  region: Region;
+  place: Place;
   onClick: () => void;
 }
 
-function CityItem({ region, onClick }: Props) {
-  const router = useRouter();
-
+function PlaceSelectItem({ place, onClick }: Props) {
   return (
-    <Wrapper>
-      <div
-        onClick={() => router.push(`/city/${region.id}`)}
-        css={css`
-          display: flex;
-          width: 100%;
-          margin-right: 10px;
-          cursor: pointer;
-        `}>
-        <LazyImage
-          css={css`
-            width: 80px;
-            height: 80px;
-            border-radius: 8px;
-            filter: brightness(70%);
-            margin-right: 15px;
-            object-fit: cover;
-          `}
-          src={region.pictureUrl}
-          alt={region.region}
-        />
-        <div
-          css={css`
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-          `}>
-          <Text
-            css={css`
-              cursor: pointer;
-            `}
-            typographyType={'t6'}
-            fontWeight={700}
-            color={colors.text2}>
-            {region.region}
-          </Text>
-          <Text
-            css={css`
-              cursor: pointer;
-            `}
-            typographyType={'t7'}
-            fontWeight={600}
-            color={colors.text4}>
-            {region.useCount}회 선택됨
-          </Text>
-        </div>
-      </div>
+    <FlexRowCenterContainer>
+      <PlaceItem place={place} />
       <div
         css={css`
           display: flex;
           justify-content: center;
           align-items: center;
           margin-left: auto;
-          height: 80px;
         `}>
         <button
           onClick={onClick}
@@ -151,6 +124,7 @@ function CityItem({ region, onClick }: Props) {
             background-color: #efefef;
             border-radius: 6px;
             font-size: 12px;
+            margin-left: 15px;
 
             &:hover {
               background-color: #dfdfdf;
@@ -159,15 +133,8 @@ function CityItem({ region, onClick }: Props) {
           선택
         </button>
       </div>
-    </Wrapper>
+    </FlexRowCenterContainer>
   );
 }
 
-const Wrapper = styled.div`
-  display: flex;
-  height: 80px;
-  width: 100%;
-  margin-bottom: 15px;
-`;
-
-export default Hotel;
+export default PlacePage;

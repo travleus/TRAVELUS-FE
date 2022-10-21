@@ -3,8 +3,12 @@ import Text from '@components/Text';
 import { css } from '@emotion/react';
 import colors from '@constants/colors';
 import useResize from '@hooks/useResize';
+import usePlan from '@stores/plan/planHook';
+import { PlaceHash } from '@utils/types';
 
 function PlanProgress() {
+  const { plan } = usePlan();
+
   return (
     <div
       css={css`
@@ -14,25 +18,40 @@ function PlanProgress() {
         margin-bottom: 50px;
       `}>
       <FlexRowCenterContainer>
-        <PlaceHolder name={'제주'} />
+        {plan.region && <PlaceHolder placeType={'region'} name={plan.region.region} />}
         <ProgressDot />
-        <PlaceHolder name={'에코랜드 테마파크'} />
+        {plan.hotel ? <PlaceHolder placeType={'hotel'} name={plan.hotel.name} /> : <PassengerImage />}
         <ProgressDot />
-        <PlaceHolder name={'회가서쪽에서뜨겟네'} />
+        {plan.sights ? <PlaceHolder placeType={'hotplace'} name={plan.sights.name} /> : <PassengerImage />}
         <ProgressDot />
-        <PlaceHolder name={'에코랜드 테마파크'} />
+        {plan.restaurant ? <PlaceHolder placeType={'restaurant'} name={plan.restaurant.name} /> : <PassengerImage />}
         <ProgressDot />
-        <PlaceHolder name={'에코랜드 테마파크'} />
+        {plan.cafe ? <PlaceHolder placeType={'cafe'} name={plan.cafe.name} /> : <PassengerImage />}
       </FlexRowCenterContainer>
     </div>
   );
 }
 
-interface Props {
-  name: string;
+function PassengerImage() {
+  return (
+    <img
+      css={css`
+        margin: 0 5px;
+        width: 25px;
+        height: 25px;
+      `}
+      src={'/icons/passenger.png'}
+      alt={'passenger'}
+    />
+  );
 }
 
-function PlaceHolder({ name }: Props) {
+interface Props {
+  name: string;
+  placeType: string;
+}
+
+function PlaceHolder({ name, placeType }: Props) {
   return (
     <div
       css={css`
@@ -42,7 +61,7 @@ function PlaceHolder({ name }: Props) {
         margin: 0 5px;
         height: 60px;
       `}>
-      <Text typographyType={'t8'}>여행지</Text>
+      <Text typographyType={'t8'}>{PlaceHash[placeType]}</Text>
       <img
         css={css`
           margin-top: 4px;

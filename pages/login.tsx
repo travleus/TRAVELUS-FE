@@ -36,6 +36,7 @@ const Login: NextPage = () => {
 
   const onLoginSuccess = (member: Member) => {
     window.localStorage.setItem('kakao', member.kakao);
+    window.localStorage.setItem('id', String(member.id));
     queryClient.setQueryData(['user'], member);
     router.push('/');
   };
