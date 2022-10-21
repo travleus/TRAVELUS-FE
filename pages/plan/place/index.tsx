@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 import { useEffect, useState } from 'react';
-import { useFetchPlaceOrderedByRegion } from '@hooks/queries';
+import { useFetchLikes, useFetchPlaceOrderedByRegion } from '@hooks/queries';
 import { Container, FlexRowCenterContainer, MainContainer, TopContainer } from '@components/Container';
 import BackButton from '@components/BackButton';
 import Text from '@components/Text';
@@ -14,7 +14,7 @@ import PlanProgress from '@components/PlanProgress';
 import { Place } from '@apis/place';
 import usePlan from '@stores/plan/planHook';
 import PlaceItem from '@components/PlaceItem';
-import { PlaceHash } from '@utils/types';
+import { LikesTargetTypeHash, PlaceHash } from '@utils/types';
 import EmptyContent from '@components/EmptyContent';
 
 const PlacePage: NextPage = () => {
@@ -23,7 +23,11 @@ const PlacePage: NextPage = () => {
   const { plan, onInitStep } = usePlan();
   const [open, setOpen] = useState(false);
   const [place, setPlace] = useState<Place | null>();
+  const [memberId, setMemberId] = useState<number>(0);
+  const [likesPlace, setLikesPlace] = useState<Array<Place>>([]);
+  const [toggle, setToggle] = useState(false);
   const allPlace = useFetchPlaceOrderedByRegion(target as string, plan.region?.id as number, 100, 0);
+  const likes = useFetchLikes(LikesTargetTypeHash[target as string], memberId);
 
   const onClickItem = (place: Place) => {
     setPlace(place);
@@ -33,6 +37,8 @@ const PlacePage: NextPage = () => {
   useEffect(() => {
     setOpen(false);
     setPlace(null);
+    setLikesPlace([]);
+    setToggle(false);
   }, [setOpen, setPlace, target]);
 
   useEffect(() => {
@@ -42,11 +48,27 @@ const PlacePage: NextPage = () => {
     }
   }, [target]);
 
+  useEffect(() => {
+    setMemberId(Number(window.localStorage.getItem('id')));
+  }, [setMemberId]);
+
+  useEffect(() => {
+    if (allPlace.data && likes.data) {
+      const temp: Array<Place> = [];
+      allPlace.data.content.map(place => {
+        likes.data.content.map(like => {
+          if (like.refId === place.id) temp.push(place);
+        });
+      });
+      setLikesPlace(temp);
+    }
+  }, [likes.data, allPlace.data]);
+
   return (
     <>
       {allPlace.data ? (
         <Container>
-          <BackButton />
+          <BackButton showHome={true} />
           <TopContainer>
             <Text typographyType={'t3'} fontWeight={700}>
               여행 루트 만들기
@@ -81,9 +103,13 @@ const PlacePage: NextPage = () => {
                 typographyType={'t7'}>
                 즐겨찾기
               </Text>
-              <Switch />
+              <Switch toggle={toggle} setToggle={setToggle} />
             </div>
-            {allPlace.data.content.length ? (
+            {toggle ? (
+              likesPlace.map(place => (
+                <PlaceSelectItem key={place.id} place={place} onClick={() => onClickItem(place)} />
+              ))
+            ) : allPlace.data.content.length ? (
               allPlace.data.content.map(place => (
                 <PlaceSelectItem key={place.id} place={place} onClick={() => onClickItem(place)} />
               ))

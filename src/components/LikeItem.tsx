@@ -1,45 +1,57 @@
 import PlaceItem from '@components/PlaceItem';
-import { css } from '@emotion/react';
 import { FlexRowCenterContainer } from '@components/Container';
-import LazyImage from '@components/LazyImage';
-import { Place } from '@apis/place';
 import { DeleteLikes, setLikes } from '@apis/likes';
+import { useFetchPlace } from '@hooks/queries';
+import { useQueryClient } from '@tanstack/react-query';
+import styled from '@emotion/styled';
 
 interface Props {
-  place: Place;
+  id: number;
+  refId: number;
+  targetType: string;
 }
 
-function LikeItem({ place }: Props) {
+function LikeItem({ id, refId, targetType }: Props) {
+  const place = useFetchPlace(targetType, refId);
+  const queryClient = useQueryClient();
+
   const onClickButton = async () => {
     try {
       const likes: DeleteLikes = {
-        id: 1,
+        id: id,
         memberId: Number(window.localStorage.getItem('id')),
-        refId: place.id,
+        refId: refId,
       };
       await setLikes(likes);
-      console.log('success');
+      await queryClient.invalidateQueries(['likes']);
     } catch (e) {
-      console.log('fail');
+      console.log(e);
     }
   };
 
   return (
-    <FlexRowCenterContainer>
-      <PlaceItem place={place} />
-      <LazyImage
-        onClick={onClickButton}
-        css={css`
-          width: 10px;
-          height: 10px;
-          margin-left: auto;
-          cursor: pointer;
-        `}
-        src={'/icons/close.png'}
-        alt={'close_icon'}
-      />
-    </FlexRowCenterContainer>
+    <>
+      {place.data && (
+        <FlexRowCenterContainer>
+          <PlaceItem place={place.data} />
+          <CancelButton onClick={onClickButton}>취소</CancelButton>
+        </FlexRowCenterContainer>
+      )}
+    </>
   );
 }
+
+const CancelButton = styled.button`
+  width: 60px;
+  height: 40px;
+  background-color: #efefef;
+  border-radius: 6px;
+  font-size: 12px;
+  margin-left: 10px;
+
+  &:hover {
+    background-color: #dfdfdf;
+  }
+`;
 
 export default LikeItem;

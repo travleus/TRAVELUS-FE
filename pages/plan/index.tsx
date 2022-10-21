@@ -4,7 +4,6 @@ import BackButton from '@components/BackButton';
 import Text from '@components/Text';
 import { css } from '@emotion/react';
 import colors from '@constants/colors';
-import Switch from '@components/Switch';
 import Select from '@components/Select';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -36,7 +35,7 @@ const Plan: NextPage = () => {
     <>
       {allRegion.data ? (
         <Container>
-          <BackButton />
+          <BackButton showHome={true} />
           <TopContainer>
             <Text typographyType={'t3'} fontWeight={700}>
               여행 루트 만들기
@@ -54,24 +53,6 @@ const Plan: NextPage = () => {
             </Text>
           </TopContainer>
           <MainContainer>
-            <div
-              css={css`
-                display: flex;
-                margin-bottom: 20px;
-              `}>
-              <Text
-                css={css`
-                  letter-spacing: -0.5px;
-                  height: 20px;
-                  line-height: 20px;
-                  margin-left: auto;
-                  margin-right: 5px;
-                `}
-                typographyType={'t7'}>
-                즐겨찾기
-              </Text>
-              <Switch />
-            </div>
             {allRegion.data.map(region => (
               <CityItem key={region.id} region={region} onClick={() => onClickItem(region)} />
             ))}

@@ -23,3 +23,8 @@ export const getLikesPlace = async (place: string, memberId: number) => {
   const response = await axios.get(`${API_URL}/${place}?memberId=${memberId}`);
   return response.data;
 };
+
+export const getCheckLikes = async (memberId: number, targetType: string, refId: number) => {
+  const response = await axios.get(`${API_URL}/check?memberId=${memberId}&targetType=${targetType}&refId=${refId}`);
+  return response.data;
+};

@@ -43,16 +43,16 @@ const Like: NextPage = () => {
           </TopContainer>
           <MainContainer>
             {hotelLikes.data.content.map(place => (
-              <LikeItem key={place.id} place={place} />
+              <LikeItem key={place.id} id={place.id} refId={place.refId} targetType={'hotel'} />
             ))}
             {sightsLikes.data.content.map(place => (
-              <LikeItem key={place.id} place={place} />
+              <LikeItem key={place.id} id={place.id} refId={place.refId} targetType={'hotplace'} />
             ))}
             {restaurantLikes.data.content.map(place => (
-              <LikeItem key={place.id} place={place} />
+              <LikeItem key={place.id} id={place.id} refId={place.refId} targetType={'restaurant'} />
             ))}
             {cafeLikes.data.content.map(place => (
-              <LikeItem key={place.id} place={place} />
+              <LikeItem key={place.id} id={place.id} refId={place.refId} targetType={'cafe'} />
             ))}
           </MainContainer>
           <Footer />

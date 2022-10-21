@@ -16,7 +16,7 @@ import {
   getPlaceByRegionWithTag,
   Place,
 } from '@apis/place';
-import { DeleteLikes, getLikesPlace, Likes, RegisterLikes, setLikes } from '@apis/likes';
+import { DeleteLikes, getCheckLikes, getLikesPlace, Likes, RegisterLikes, setLikes } from '@apis/likes';
 import { CourseDTO, getAllCourseByMemberId, getCourseById } from '@apis/course';
 
 /*
@@ -150,17 +150,36 @@ export const useMutateLikes = (place: string, likes: DeleteLikes | RegisterLikes
 export const useFetchLikes = (
   place: string,
   memberId: number,
-  options?: UseQueryOptions<Page<Place>, AxiosError, Page<Place>, ['likes', string]>
+  options?: UseQueryOptions<Page<Likes>, AxiosError, Page<Likes>, ['likes', string]>
 ) => {
-  const fetchLikes: UseQueryResult<Page<Place>, AxiosError> = useQuery(
+  const fetchLikes: UseQueryResult<Page<Likes>, AxiosError> = useQuery(
     ['likes', place],
     () => getLikesPlace(place, memberId),
     {
+      enabled: memberId !== 0,
       ...options,
     }
   );
 
   return fetchLikes;
+};
+
+export const useFetchCheckLikes = (
+  memberId: number,
+  targetType: string,
+  refId: number,
+  options?: UseQueryOptions<Likes | null, AxiosError, Likes | null, ['checkLikes', string, number]>
+) => {
+  const fetchCheckLikes: UseQueryResult<Likes | null, AxiosError> = useQuery(
+    ['checkLikes', targetType, refId],
+    () => getCheckLikes(memberId, targetType, refId),
+    {
+      enabled: memberId !== 0 && !isNaN(refId),
+      ...options,
+    }
+  );
+
+  return fetchCheckLikes;
 };
 
 /*

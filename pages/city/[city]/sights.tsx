@@ -24,7 +24,7 @@ const Sights: NextPage = () => {
               {region.data?.region}
             </Text>
             <Text typographyType={'t5'} fontWeight={700}>
-              호텔
+              명소
             </Text>
           </TopContainer>
           <MainContainer>
