@@ -24,7 +24,7 @@ const Restaurant: NextPage = () => {
               {region.data?.region}
             </Text>
             <Text typographyType={'t5'} fontWeight={700}>
-              호텔
+              식당
             </Text>
           </TopContainer>
           <MainContainer>

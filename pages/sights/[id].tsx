@@ -4,38 +4,56 @@ import { css } from '@emotion/react';
 import Text from '@components/Text';
 import colors from '@constants/colors';
 import BottomCTA from '@components/BottomCTA';
-import { useFetchPlace } from '@hooks/queries';
+import { useFetchCheckLikes, useFetchPlace } from '@hooks/queries';
 import { useRouter } from 'next/router';
 import Loading from '@components/Loading';
 import TagList from '@components/TagItem';
 import styled from '@emotion/styled';
-import { RegisterLikes, setLikes } from '@apis/likes';
+import { DeleteLikes, RegisterLikes, setLikes } from '@apis/likes';
+import { useQueryClient } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
 
 const Sights: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
   const sights = useFetchPlace('hotplace', Number(id));
   const tagList = sights.data?.tag.split('#').splice(1);
+  const queryClient = useQueryClient();
+  const [memberId, setMemberId] = useState(0);
+  const checkLikes = useFetchCheckLikes(memberId, 'HOT_PLACE', Number(id));
 
   const onClickButton = async () => {
-    const memberId = Number(window.localStorage.getItem('id'));
-
     if (memberId === 0) {
       await router.push('/login');
       return;
     }
+
     try {
-      const likes: RegisterLikes = {
-        memberId: memberId,
-        targetType: 'HOT_PLACE',
-        refId: Number(id),
-      };
+      let likes: DeleteLikes | RegisterLikes;
+      if (checkLikes.data) {
+        likes = {
+          id: checkLikes.data.id,
+          memberId: memberId,
+          refId: Number(id),
+        };
+      } else {
+        likes = {
+          memberId: memberId,
+          targetType: 'HOT_PLACE',
+          refId: Number(id),
+        };
+      }
       await setLikes(likes);
-      console.log('success');
+      await queryClient.invalidateQueries(['likes']);
+      await queryClient.invalidateQueries(['checkLikes']);
     } catch (e) {
-      console.log('fail');
+      console.log(e);
     }
   };
+
+  useEffect(() => {
+    setMemberId(Number(window.localStorage.getItem('id')));
+  }, []);
 
   return (
     <>
@@ -89,7 +107,7 @@ const Sights: NextPage = () => {
                 <TagList tagList={tagList} mr={true} />
               </TagListWrapper>
             </TagWrapper>
-            <BottomCTA onClick={onClickButton}>담아두기</BottomCTA>
+            <BottomCTA onClick={onClickButton}>{checkLikes.data ? '취소' : '담아두기'}</BottomCTA>
           </MainWrapper>
         </div>
       ) : (

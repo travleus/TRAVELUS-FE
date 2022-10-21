@@ -34,6 +34,13 @@ export const TargetTypeHash: Hash<string> = {
   CAFE: 'cafe',
 };
 
+export const LikesTargetTypeHash: Hash<string> = {
+  hotel: 'hotel',
+  hotplace: 'place',
+  restaurant: 'restaurant',
+  cafe: 'cafe',
+};
+
 export const PlaceHash: Hash<string> = {
   region: '여행지',
   hotel: '호텔',

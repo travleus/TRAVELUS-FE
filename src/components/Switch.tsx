@@ -1,10 +1,16 @@
 import styled from '@emotion/styled';
 import colors from '@constants/colors';
+import { Dispatch, SetStateAction } from 'react';
 
-function Switch() {
+interface Props {
+  toggle: boolean;
+  setToggle: Dispatch<SetStateAction<boolean>>;
+}
+
+function Switch({ toggle, setToggle }: Props) {
   return (
     <Wrapper>
-      <SwitchBox type="checkbox" id="switch" />
+      <SwitchBox type="checkbox" id="switch" checked={toggle} onChange={() => setToggle(!toggle)} />
       <SwitchLabel htmlFor="switch">
         <OnOffButton />
       </SwitchLabel>
