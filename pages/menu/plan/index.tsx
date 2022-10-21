@@ -6,53 +6,72 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import colors from '@constants/colors';
 import Footer from '@components/Footer';
+import { useEffect, useState } from 'react';
+import { useFetchCourseByMember } from '@hooks/queries';
+import Loading from '@components/Loading';
+import { CourseDTO } from '@apis/course';
+import { useRouter } from 'next/router';
 
 const Plan: NextPage = () => {
+  const [memberId, setMemberId] = useState(0);
+  const fetchCourse = useFetchCourseByMember(memberId, 100, 0);
+
+  useEffect(() => {
+    setMemberId(Number(window.localStorage.getItem('id')));
+  }, []);
   return (
-    <Container>
-      <BackButton />
-      <TopContainer>
-        <div
-          css={css`
-            display: flex;
-            align-items: center;
-          `}>
-          <img
-            css={css`
-              margin-right: 15px;
-            `}
-            width={20}
-            height={20}
-            src={'/icons/plan_primary.png'}
-            alt={'plan_icon'}
-          />
-          <Text typographyType={'t3'} fontWeight={600}>
-            내 여행 계획
-          </Text>
-        </div>
-      </TopContainer>
-      <MainContainer>
-        <div>
-          <Text typographyType={'t5'} fontWeight={600} color={colors.text2}>
-            일정 1
-          </Text>
-          <PlanItem />
-        </div>
-        <div>
-          <Text typographyType={'t5'} fontWeight={600} color={colors.text2}>
-            일정 2
-          </Text>
-          <PlanItem />
-        </div>
-      </MainContainer>
-      <Footer />
-    </Container>
+    <>
+      {fetchCourse.data ? (
+        <Container>
+          <BackButton />
+          <TopContainer>
+            <div
+              css={css`
+                display: flex;
+                align-items: center;
+              `}>
+              <img
+                css={css`
+                  margin-right: 15px;
+                `}
+                width={20}
+                height={20}
+                src={'/icons/plan_primary.png'}
+                alt={'plan_icon'}
+              />
+              <Text typographyType={'t3'} fontWeight={600}>
+                내 여행 계획
+              </Text>
+            </div>
+          </TopContainer>
+          <MainContainer>
+            {fetchCourse.data.content.map((course, idx) => (
+              <div key={idx}>
+                <Text typographyType={'t5'} fontWeight={600} color={colors.text2}>
+                  일정 {idx + 1}
+                </Text>
+                <PlanItem course={course} />
+              </div>
+            ))}
+          </MainContainer>
+          <Footer />
+        </Container>
+      ) : (
+        <Loading />
+      )}
+    </>
   );
 };
 
-function PlanItem() {
+interface Props {
+  course: CourseDTO;
+}
+
+function PlanItem({ course }: Props) {
+  const router = useRouter();
+
   return (
-    <PlanItemWrapper>
+    <PlanItemWrapper onClick={() => router.push(`/menu/plan/${course.id}`)}>
       <CityWrapper>
         <img
           css={css`
@@ -64,32 +83,32 @@ function PlanItem() {
           alt={'placeholder'}
         />
         <Text typographyType={'t6'} fontWeight={600} color={colors.text2}>
-          제주도
+          {course.hotelList[0].region}
         </Text>
       </CityWrapper>
       <PlaceItemWrapper>
         <DotWrapper>
           <Dot color={colors.tag1} />
         </DotWrapper>
-        <Text typographyType={'t7'}>산방산</Text>
+        <Text typographyType={'t7'}>{course.hotelList[0].name}</Text>
       </PlaceItemWrapper>
       <PlaceItemWrapper>
         <DotWrapper>
           <Dot color={colors.tag2} />
         </DotWrapper>
-        <Text typographyType={'t7'}>에코랜드 테마파크</Text>
+        <Text typographyType={'t7'}>{course.hotPlaceList[0].name}</Text>
       </PlaceItemWrapper>
       <PlaceItemWrapper>
         <DotWrapper>
           <Dot color={colors.tag3} />
         </DotWrapper>
-        <Text typographyType={'t7'}>제주광해 애월</Text>
+        <Text typographyType={'t7'}>{course.restaurantList[0].name}</Text>
       </PlaceItemWrapper>
       <PlaceItemWrapper>
         <DotWrapper>
           <Dot color={colors.tag4} />
         </DotWrapper>
-        <Text typographyType={'t7'}>그레이그로브</Text>
+        <Text typographyType={'t7'}>{course.cafeList[0].name}</Text>
       </PlaceItemWrapper>
     </PlanItemWrapper>
   );

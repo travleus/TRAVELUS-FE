@@ -1,4 +1,11 @@
-import { useQuery, UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
+import {
+  useMutation,
+  UseMutationResult,
+  useQuery,
+  useQueryClient,
+  UseQueryOptions,
+  UseQueryResult,
+} from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { getAllRegion, getRegionById, getRegionOrderByUseCount, Region } from '@apis/region';
 import { Page } from '@utils/types';
@@ -9,6 +16,8 @@ import {
   getPlaceByRegionWithTag,
   Place,
 } from '@apis/place';
+import { DeleteLikes, getLikesPlace, Likes, RegisterLikes, setLikes } from '@apis/likes';
+import { CourseDTO, getAllCourseByMemberId, getCourseById } from '@apis/course';
 
 /*
 REGION QUERY
@@ -97,7 +106,7 @@ export const useFetchPlaceOrderedByRegion = (
     [`${place}Ordered`, regionId, size],
     () => getPlaceByRegionOrderByUseCount(place, regionId, size, page),
     {
-      enabled: !isNaN(regionId),
+      enabled: !isNaN(regionId) && place !== undefined,
       ...options,
     }
   );
@@ -121,4 +130,68 @@ export const useFetchPlaceWithTag = (
   );
 
   return placeWithTag;
+};
+
+/*
+LIKES QUERY
+ */
+
+export const useMutateLikes = (place: string, likes: DeleteLikes | RegisterLikes) => {
+  const queryClient = useQueryClient();
+  const mutationLikes: UseMutationResult<Likes, AxiosError> = useMutation(() => setLikes(likes), {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(['likes', place]);
+    },
+  });
+
+  return mutationLikes;
+};
+
+export const useFetchLikes = (
+  place: string,
+  memberId: number,
+  options?: UseQueryOptions<Page<Place>, AxiosError, Page<Place>, ['likes', string]>
+) => {
+  const fetchLikes: UseQueryResult<Page<Place>, AxiosError> = useQuery(
+    ['likes', place],
+    () => getLikesPlace(place, memberId),
+    {
+      ...options,
+    }
+  );
+
+  return fetchLikes;
+};
+
+/*
+COURSE QUERY
+ */
+
+export const useFetchCourseByMember = (
+  memberId: number,
+  size: number,
+  page: number,
+  options?: UseQueryOptions<Page<CourseDTO>, AxiosError, Page<CourseDTO>, ['courseList', number]>
+) => {
+  const fetchCourse: UseQueryResult<Page<CourseDTO>, AxiosError> = useQuery(
+    ['courseList', memberId],
+    () => getAllCourseByMemberId(memberId, size, page),
+    {
+      ...options,
+    }
+  );
+
+  return fetchCourse;
+};
+
+export const useFetchCourseById = (
+  id: number,
+  options?: UseQueryOptions<CourseDTO, AxiosError, CourseDTO, ['course', number]>
+) => {
+  const fetchCourse: UseQueryResult<CourseDTO, AxiosError> = useQuery(['course', id], () => getCourseById(id), {
+    enabled: !isNaN(id),
+    ...options,
+  });
+
+  return fetchCourse;
 };

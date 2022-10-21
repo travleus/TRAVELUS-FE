@@ -9,15 +9,32 @@ import { useRouter } from 'next/router';
 import Loading from '@components/Loading';
 import TagList from '@components/TagItem';
 import styled from '@emotion/styled';
+import { RegisterLikes, setLikes } from '@apis/likes';
 
-const Hotel: NextPage = () => {
+const Cafe: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
   const cafe = useFetchPlace('cafe', Number(id));
   const tagList = cafe.data?.tag.split('#').splice(1);
 
-  const onClickButton = () => {
-    // Todo
+  const onClickButton = async () => {
+    const memberId = Number(window.localStorage.getItem('id'));
+
+    if (memberId === 0) {
+      await router.push('/login');
+      return;
+    }
+    try {
+      const likes: RegisterLikes = {
+        memberId: memberId,
+        targetType: 'CAFE',
+        refId: Number(id),
+      };
+      await setLikes(likes);
+      console.log('success');
+    } catch (e) {
+      console.log('fail');
+    }
   };
 
   return (
@@ -86,6 +103,7 @@ const TopWrapper = styled.div`
   display: flex;
   height: 50px;
   align-items: center;
+  padding-right: 10px;
 `;
 
 const PlaceImage = styled.img`
@@ -117,4 +135,4 @@ const TagListWrapper = styled.div`
   margin-top: 5px;
 `;
 
-export default Hotel;
+export default Cafe;

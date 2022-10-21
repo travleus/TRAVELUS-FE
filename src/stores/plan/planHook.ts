@@ -1,4 +1,4 @@
-import { nextStep, Plan } from '@stores/plan/plan';
+import { initStep, nextStep, Plan } from '@stores/plan/plan';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@stores/index';
 import { Region } from '@apis/region';
@@ -9,11 +9,15 @@ const usePlan = () => {
 
   const dispatch = useDispatch();
 
-  const onNextStep = (payload: Region | Place) => {
+  const onNextStep = async (payload: Region | Place) => {
     dispatch(nextStep(payload));
   };
 
-  return { plan, onNextStep };
+  const onInitStep = (payLoad: string) => {
+    dispatch(initStep(payLoad));
+  };
+
+  return { plan, onNextStep, onInitStep };
 };
 
 export default usePlan;

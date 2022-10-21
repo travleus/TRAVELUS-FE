@@ -6,9 +6,10 @@ interface Props {
   onClick: () => void;
   children: ReactNode;
   height?: number;
+  className?: string;
 }
 
-function BottomCTA({ children, onClick, height = 48 }: Props) {
+function BottomCTA({ children, onClick, height = 48, className }: Props) {
   return (
     <button
       css={css`
@@ -19,11 +20,13 @@ function BottomCTA({ children, onClick, height = 48 }: Props) {
         width: 100%;
         height: ${height}px;
         cursor: pointer;
+        margin-top: auto;
 
         &:hover {
           background-color: ${colors.primary1};
         }
       `}
+      className={className}
       onClick={onClick}>
       {children}
     </button>

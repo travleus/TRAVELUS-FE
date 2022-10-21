@@ -7,22 +7,30 @@ import colors from '@constants/colors';
 import Switch from '@components/Switch';
 import Select from '@components/Select';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Region } from '@apis/region';
 import { useFetchAllRegion } from '@hooks/queries';
 import LazyImage from '@components/LazyImage';
 import styled from '@emotion/styled';
 import Loading from '@components/Loading';
+import usePlan from '@stores/plan/planHook';
 
 const Plan: NextPage = () => {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [region, setRegion] = useState<Region | null>();
   const allRegion = useFetchAllRegion();
+  const { onInitStep } = usePlan();
 
   const onClickItem = (region: Region) => {
     setRegion(region);
     setOpen(true);
   };
+
+  useEffect(() => {
+    window.localStorage.getItem('id') || router.push('/login');
+    onInitStep('region');
+  }, []);
 
   return (
     <>
