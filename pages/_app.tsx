@@ -6,8 +6,9 @@ import { QueryClientProvider, Hydrate } from '@tanstack/react-query';
 import { useState } from 'react';
 import AppLayout from '@components/AppLayout';
 import { wrapper } from '@stores/index';
+import { Provider } from 'react-redux';
 
-function MyApp({ Component, pageProps }: AppProps<{ dehydratedState: unknown }>) {
+function MyApp({ Component, ...rest }: AppProps<{ dehydratedState: unknown }>) {
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -16,16 +17,20 @@ function MyApp({ Component, pageProps }: AppProps<{ dehydratedState: unknown }>)
         },
       })
   );
+  const { store, props } = wrapper.useWrappedStore(rest);
+  const { pageProps } = props;
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Hydrate state={pageProps.dehydratedState}>
-        <AppLayout>
-          <Component {...pageProps} />
-        </AppLayout>
-      </Hydrate>
-    </QueryClientProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
+          <AppLayout>
+            <Component {...pageProps} />
+          </AppLayout>
+        </Hydrate>
+      </QueryClientProvider>
+    </Provider>
   );
 }
 
-export default wrapper.withRedux(MyApp);
+export default MyApp;
