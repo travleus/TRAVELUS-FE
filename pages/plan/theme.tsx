@@ -62,6 +62,10 @@ const Theme: NextPage = () => {
   }, []);
 
   useEffect(() => {
+    plan.region || router.push('/plan');
+  }, [plan, router]);
+
+  useEffect(() => {
     if (
       fetchHotel.data?.content.length &&
       fetchSights.data?.content.length &&

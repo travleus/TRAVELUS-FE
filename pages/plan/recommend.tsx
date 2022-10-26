@@ -6,9 +6,16 @@ import { keyframes } from '@emotion/react';
 import colors from '@constants/colors';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import usePlan from '@stores/plan/planHook';
 
 const Recommend: NextPage = () => {
   const router = useRouter();
+  const { plan } = usePlan();
+
+  useEffect(() => {
+    plan.region || router.push('/plan');
+  }, [plan, router]);
 
   return (
     <Container>

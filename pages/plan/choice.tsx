@@ -7,10 +7,15 @@ import colors from '@constants/colors';
 import BottomCTA from '@components/BottomCTA';
 import usePlan from '@stores/plan/planHook';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 const Choice: NextPage = () => {
   const router = useRouter();
   const { plan } = usePlan();
+
+  useEffect(() => {
+    plan.region || router.push('/plan');
+  }, [plan, router]);
 
   return (
     <Container>
