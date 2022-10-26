@@ -37,7 +37,7 @@ function SelectItem({ onClose, place }: Props) {
     await onNextStep(place);
     switch (plan.step) {
       case 1:
-        await router.push('/plan/place?target=hotel');
+        await router.push('/plan/choice');
         break;
       case 2:
         await router.push('/plan/place?target=hotplace');
