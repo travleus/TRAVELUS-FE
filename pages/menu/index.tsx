@@ -59,7 +59,7 @@ const Menu: NextPage = () => {
             padding-top: 60px;
           `}>
           <Text typographyType={'t4'} fontWeight={700}>
-            계정
+            메뉴
           </Text>
           <Item src={'/icons/plan_primary.png'} left={'내 여행계획'} onClick={() => router.push('/menu/plan')} />
           <Item src={'/icons/heart_active.png'} left={'찜 장소'} onClick={() => router.push('/menu/like')} />
