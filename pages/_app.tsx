@@ -7,6 +7,7 @@ import { useState } from 'react';
 import AppLayout from '@components/AppLayout';
 import { wrapper } from '@stores/index';
 import { Provider } from 'react-redux';
+import MetaHead from '@components/MetaHead';
 
 function MyApp({ Component, ...rest }: AppProps<{ dehydratedState: unknown }>) {
   const [queryClient] = useState(
@@ -24,6 +25,7 @@ function MyApp({ Component, ...rest }: AppProps<{ dehydratedState: unknown }>) {
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
+          <MetaHead />
           <AppLayout>
             <Component {...pageProps} />
           </AppLayout>
