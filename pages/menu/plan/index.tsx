@@ -13,12 +13,14 @@ import { CourseDTO } from '@apis/course';
 import { useRouter } from 'next/router';
 
 const Plan: NextPage = () => {
+  const router = useRouter();
   const [memberId, setMemberId] = useState(0);
   const fetchCourse = useFetchCourseByMember(memberId, 100, 0);
 
   useEffect(() => {
-    setMemberId(Number(window.localStorage.getItem('id')));
+    window.localStorage.getItem('id') ? setMemberId(Number(window.localStorage.getItem('id'))) : router.push('/login');
   }, []);
+
   return (
     <>
       {fetchCourse.data ? (

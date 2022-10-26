@@ -8,8 +8,10 @@ import Footer from '@components/Footer';
 import { useFetchLikes } from '@hooks/queries';
 import { useEffect, useState } from 'react';
 import Loading from '@components/Loading';
+import { useRouter } from 'next/router';
 
 const Like: NextPage = () => {
+  const router = useRouter();
   const [memberId, setMemberId] = useState<number>(0);
   const hotelLikes = useFetchLikes('hotel', memberId);
   const sightsLikes = useFetchLikes('place', memberId);
@@ -17,7 +19,7 @@ const Like: NextPage = () => {
   const cafeLikes = useFetchLikes('cafe', memberId);
 
   useEffect(() => {
-    setMemberId(Number(window.localStorage.getItem('id')));
+    window.localStorage.getItem('id') ? setMemberId(Number(window.localStorage.getItem('id'))) : router.push('/login');
   }, [setMemberId]);
 
   return (
