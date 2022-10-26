@@ -11,9 +11,10 @@ import { TargetTypeHash } from '@utils/types';
 interface Props {
   place: Place;
   region?: boolean;
+  click?: boolean;
 }
 
-function PlaceItem({ place, region = false }: Props) {
+function PlaceItem({ place, region = false, click = true }: Props) {
   const router = useRouter();
   const tagList = place.tag.split('#').splice(1);
 
@@ -35,7 +36,9 @@ function PlaceItem({ place, region = false }: Props) {
         src={place.pictureUrl}
         alt={place.name}
       />
-      <ContentWrapper onClick={() => router.push(`/${TargetTypeHash[place.targetType]}/${place.id}`)}>
+      <ContentWrapper
+        click={click}
+        onClick={() => click && router.push(`/${TargetTypeHash[place.targetType]}/${place.id}`)}>
         {region && (
           <Text typographyType={'t8'} color={colors.text4}>
             {place.region}
@@ -76,12 +79,12 @@ const Wrapper = styled.div`
   margin-bottom: 15px;
 `;
 
-const ContentWrapper = styled.div`
+const ContentWrapper = styled.div<{ click: boolean }>`
   display: flex;
   flex-direction: column;
   flex: 1;
   height: 100px;
-  cursor: pointer;
+  cursor: ${props => (props.click ? 'pointer' : 'initial')};
 
   @media screen and (max-width: 768px) {
     height: 80px;
