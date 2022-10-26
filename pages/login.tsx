@@ -109,6 +109,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   height: 100vh;
+  min-height: available;
 `;
 
 const KaKaoImage = styled.img`
