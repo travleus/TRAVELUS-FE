@@ -24,9 +24,9 @@ interface TagProps {
 }
 
 const TagColorHash: Hash<string> = {
-  로컬: colors.tag1,
-  감성: colors.tag2,
-  도심: colors.tag3,
+  로컬: colors.tag2,
+  감성: colors.tag5,
+  도심: colors.tag1,
   자연: colors.tag4,
 };
 

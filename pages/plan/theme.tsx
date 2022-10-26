@@ -212,7 +212,7 @@ const IconImage = styled.img`
 const TextWrapper = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 `;
 
 export default Theme;

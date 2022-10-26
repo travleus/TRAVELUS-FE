@@ -74,7 +74,7 @@ const PlanDetail: NextPage = () => {
             <ItemWrapper>
               <TextWrapper>
                 <IconImage src={'/icons/placeholder.png'} alt={'placeholder'} />
-                <Text typographyType={'t4'} fontWeight={700} color={colors.text2}>
+                <Text typographyType={'t5'} fontWeight={700} color={colors.text2}>
                   호텔
                 </Text>
               </TextWrapper>
@@ -83,7 +83,7 @@ const PlanDetail: NextPage = () => {
             <ItemWrapper>
               <TextWrapper>
                 <IconImage src={'/icons/placeholder.png'} alt={'placeholder'} />
-                <Text typographyType={'t4'} fontWeight={700} color={colors.text2}>
+                <Text typographyType={'t5'} fontWeight={700} color={colors.text2}>
                   명소
                 </Text>
               </TextWrapper>
@@ -92,7 +92,7 @@ const PlanDetail: NextPage = () => {
             <ItemWrapper>
               <TextWrapper>
                 <IconImage src={'/icons/placeholder.png'} alt={'placeholder'} />
-                <Text typographyType={'t4'} fontWeight={700} color={colors.text2}>
+                <Text typographyType={'t5'} fontWeight={700} color={colors.text2}>
                   식당
                 </Text>
               </TextWrapper>
@@ -101,7 +101,7 @@ const PlanDetail: NextPage = () => {
             <ItemWrapper>
               <TextWrapper>
                 <IconImage src={'/icons/placeholder.png'} alt={'placeholder'} />
-                <Text typographyType={'t4'} fontWeight={700} color={colors.text2}>
+                <Text typographyType={'t5'} fontWeight={700} color={colors.text2}>
                   카페
                 </Text>
               </TextWrapper>
@@ -135,7 +135,7 @@ const ItemWrapper = styled.div`
 const TextWrapper = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 `;
 
 export default PlanDetail;
