@@ -118,13 +118,13 @@ export const useFetchPlaceWithTag = (
   place: string,
   regionId: number,
   tag: string,
-  options?: UseQueryOptions<Array<Place>, AxiosError, Array<Place>, [string, number, string]>
+  options?: UseQueryOptions<Page<Place>, AxiosError, Page<Place>, [string, number, string]>
 ) => {
-  const placeWithTag: UseQueryResult<Array<Place>, AxiosError> = useQuery(
+  const placeWithTag: UseQueryResult<Page<Place>, AxiosError> = useQuery(
     [`${place}List`, regionId, tag],
     () => getPlaceByRegionWithTag(place, regionId, tag),
     {
-      enabled: !isNaN(regionId),
+      enabled: !isNaN(regionId) && tag !== undefined,
       ...options,
     }
   );
