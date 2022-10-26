@@ -15,7 +15,7 @@ const Layout = styled.div`
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  min-height: available;
+  min-height: calc(var(--vh, 1vh) * 100);
   height: auto;
   background-color: ${colors.background};
 `;
@@ -26,7 +26,7 @@ const Container = styled.div`
   width: 100%;
   max-width: 768px;
   min-height: 100vh;
-  min-height: available;
+  min-height: calc(var(--vh, 1vh) * 100);
   background-color: white;
 `;
 
