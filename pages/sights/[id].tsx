@@ -58,12 +58,15 @@ const Sights: NextPage = () => {
   return (
     <>
       {sights.data && tagList ? (
-        <div>
+        <>
           <TopWrapper>
             <BackButton />
           </TopWrapper>
           <PlaceImage src={sights.data.pictureUrl} alt={sights.data.name} />
-          <MainWrapper>
+          <MainWrapper
+            css={css`
+              flex: 1;
+            `}>
             <MainContentWrapper>
               <Text
                 css={css`
@@ -109,7 +112,7 @@ const Sights: NextPage = () => {
             </TagWrapper>
             <BottomCTA onClick={onClickButton}>{checkLikes.data ? '취소' : '담아두기'}</BottomCTA>
           </MainWrapper>
-        </div>
+        </>
       ) : (
         <Loading />
       )}
