@@ -12,6 +12,15 @@ import styled from '@emotion/styled';
 import { DeleteLikes, RegisterLikes, setLikes } from '@apis/likes';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
+import {
+  MainContentWrapper,
+  MainWrapper,
+  NameWrapper,
+  PlaceImage,
+  TagWrapper,
+  TagListWrapper,
+  TopWrapper,
+} from '@components/PlaceLayout';
 
 const Hotel: NextPage = () => {
   const router = useRouter();
@@ -63,10 +72,7 @@ const Hotel: NextPage = () => {
             <BackButton />
           </TopWrapper>
           <PlaceImage src={hotel.data.pictureUrl} alt={hotel.data.name} />
-          <MainWrapper
-            css={css`
-              flex: 1;
-            `}>
+          <MainWrapper>
             <MainContentWrapper>
               <Text
                 css={css`
@@ -119,41 +125,5 @@ const Hotel: NextPage = () => {
     </>
   );
 };
-
-const TopWrapper = styled.div`
-  display: flex;
-  height: 50px;
-  align-items: center;
-  padding-right: 10px;
-`;
-
-const PlaceImage = styled.img`
-  width: 100%;
-  height: 500px;
-  object-fit: cover;
-`;
-
-const MainWrapper = styled.div`
-  padding: 15px;
-`;
-
-const MainContentWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const NameWrapper = styled.div`
-  display: flex;
-`;
-
-const TagWrapper = styled.div`
-  margin-top: 40px;
-  height: 120px;
-`;
-
-const TagListWrapper = styled.div`
-  display: flex;
-  margin-top: 5px;
-`;
 
 export default Hotel;
