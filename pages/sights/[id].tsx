@@ -91,7 +91,9 @@ const Sights: NextPage = () => {
                     margin-left: auto;
                     cursor: pointer;
                   `}
-                  typographyType={'t6'}>
+                  typographyType={'t7'}
+                  fontWeight={500}
+                  color={colors.primary2}>
                   바로가기
                 </Text>
               </NameWrapper>
