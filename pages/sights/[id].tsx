@@ -115,7 +115,7 @@ const Sights: NextPage = () => {
                 <TagList tagList={tagList} mr={true} />
               </TagListWrapper>
             </TagWrapper>
-            <BottomCTA onClick={onClickButton}>{checkLikes.data ? '취소' : '담아두기'}</BottomCTA>
+            <BottomCTA onClick={onClickButton}>{checkLikes.data ? '취소' : '찜하기'}</BottomCTA>
           </MainWrapper>
         </>
       ) : (

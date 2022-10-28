@@ -101,7 +101,7 @@ const PlacePage: NextPage = () => {
                   margin-right: 5px;
                 `}
                 typographyType={'t7'}>
-                즐겨찾기
+                찜목록
               </Text>
               <Switch toggle={toggle} setToggle={setToggle} />
             </div>
